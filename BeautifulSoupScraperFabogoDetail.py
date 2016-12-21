@@ -10,10 +10,18 @@ def parse_salon(url):
     page = urllib2.urlopen(url)
     soup = BeautifulSoup(page)
 
-    name = soup.find('h1').find('a').get('title').encode('ascii', 'ignore')
-    area = soup.find('div', class_='pt3').get_text()
-    telephone = soup.find('span', class_='fs110 lato fw900').get_text()
-    address = soup.find('p', class_='p10').get('span')
+    name = soup.find('h1').find('a')
+    if name:
+        name = name.get('title').encode('ascii', 'ignore')
+    area = soup.find('div', class_='pt3')
+    if area:
+        area = area.get_text()
+    telephone = soup.find('span', class_='fs110 lato fw900')
+    if telephone:
+        telephone = telephone.get_text()
+    address = soup.find('p', class_='p10')
+    if address:
+        address = address.get('span')
     menu_image_links = ""
     timing = ""
     feature = ""
