@@ -14,14 +14,16 @@ url = 'http://www.fabogo.com/mumbai/salons-and-spas?sort=popularity&page='
 #     name = soup.find('span', class_=' fs200 fw500 ')
 #     area = soup.find('div', class_='pt3')
 
-for r in range(1, 256):
+for r in range(183, 256):
     url_page = url + str(r)
     page = urllib2.urlopen(url_page)
     soup = BeautifulSoup(page)
-
+    print(r)
     for div in soup.find_all('div', class_='relative border-radius-3 ba bg-white clearfix'):
         link = div.find('a', class_='border-left-radius-3 link-single-venue ').get('href')
-        hero_image = div.find('img', class_='border-left-radius-3 fw300').get('src')
+        hero_image = div.find('img', class_='border-left-radius-3 fw300')
+        if hero_image:
+            hero_image = hero_image.get('src')
         data_row = [link, hero_image]
         data_remaining = BeautifulSoupScraperFabogoDetail.parse_salon(link)
         data_row += data_remaining
